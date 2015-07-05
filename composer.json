@@ -1,0 +1,19 @@
+{
+    "name": "pmvc-plugin/ssdb",
+    "description": "ssdb wraper",
+    "type": "library",
+    "keywords": ["ssdb", "pmvc", "plug-in"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hill",
+            "email": "hill@kimo.com"
+        }
+    ],
+    "require": {
+        "pmvc/pmvc": "*",
+        "pmvc-plugin/dotenv": "*",
+        "ssdb/phpssdb": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
