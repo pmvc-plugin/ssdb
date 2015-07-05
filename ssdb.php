@@ -1,23 +1,24 @@
 <?php
 namespace PMVC\PlugIn\ssdb;
-
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
+\PMVC\l(__DIR__.'/lib/SSDB.php');
 
 class ssdb extends \PMVC\PlugIn
 {
     public function init()
     {
-        if (!$this->get('ssdb')) {
+        if (empty($this['ssdb'])) {
             try {
-                $ssdb = new \SSDB\SimpleClient(
+                $ssdb = new \SimpleSSDB (
                     getenv('SSDB_HOST'),
                     getenv('SSDB_PORT')
                 );
-                $this->set('ssdb', $ssdb);
+                $this['ssdb']=$ssdb;
             } catch (Exception $e) {
-                \PMVC\log($e->getMessage());
+                \PMVC\d($e->getMessage());
             }
         }
-        $this->setDefaultAlias($this->get('ssdb'));
+        $this->aliasForce = true;
+        $this->setDefaultAlias($this['ssdb']);
     }
 }

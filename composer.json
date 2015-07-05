@@ -12,8 +12,7 @@
     ],
     "require": {
         "pmvc/pmvc": "*",
-        "pmvc-plugin/dotenv": "*",
-        "ssdb/phpssdb": "dev-master"
+        "pmvc-plugin/dotenv": "*"
     },
     "minimum-stability": "dev"
 }
