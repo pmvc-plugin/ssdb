@@ -7,14 +7,17 @@ class ssdb extends \PMVC\PlugIn
 {
     public function init()
     {
-        try {
-            $ssdb = new SimpleSSDB(
-                getenv('SSDB_HOST'),
-                getenv('SSDB_PORT')
-            );
-            $this->setDefaultAlias($ssdb);
-        } catch (Exception $e) {
-            \PMVC\log($e->getMessage());
+        if (!$this->get('ssdb')) {
+            try {
+                $ssdb = new \SSDB\SimpleClient(
+                    getenv('SSDB_HOST'),
+                    getenv('SSDB_PORT')
+                );
+                $this->set('ssdb', $ssdb);
+            } catch (Exception $e) {
+                \PMVC\log($e->getMessage());
+            }
         }
+        $this->setDefaultAlias($this->get('ssdb'));
     }
 }
