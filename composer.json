@@ -1,6 +1,6 @@
 {
     "name": "pmvc-plugin/ssdb",
-    "description": "ssdb wraper",
+    "description": "ssdb wrapper",
     "type": "library",
     "keywords": ["ssdb", "pmvc", "plug-in"],
     "license": "MIT",
