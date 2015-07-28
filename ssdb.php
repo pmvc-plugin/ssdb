@@ -17,6 +17,7 @@ class ssdb extends \PMVC\PlugIn
                 );
                 $this['ssdb']=$ssdb;
             } catch (Exception $e) {
+                \PMVC\log($e->getMessage());
                 \PMVC\d($e->getMessage());
             }
         }
