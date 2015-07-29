@@ -10,10 +10,11 @@ class ssdb extends \PMVC\PlugIn
     public function init()
     {
         if (empty($this['ssdb'])) {
+            $get = \PMVC\plug('get');
             try {
                 $ssdb = new \SimpleSSDB (
-                    getenv('SSDB_HOST'),
-                    getenv('SSDB_PORT')
+                    $get->get('SSDB_HOST'),
+                    $get->get('SSDB_PORT')
                 );
                 $this['ssdb']=$ssdb;
             } catch (Exception $e) {
