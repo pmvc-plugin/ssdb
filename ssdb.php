@@ -26,29 +26,33 @@ class ssdb extends \PMVC\PlugIn
         $this->setDefaultAlias($this['ssdb']);
     }
 
-    public function getDb($db,$key=null)
+    /**
+     * @param int    $id  group guid
+     * @param string $key group key
+     */
+    public function getDb($id,$key=null)
     {
-        if(empty($this->dbs[$db])){
+        if(empty($this->dbs[$id])){
             $path = __DIR__.'/src/dbs/'.$key.'.php';
             if (\PMVC\realpath($path)) {
                 \PMVC\l($path);
                 $class = __NAMESPACE__.'\\'.$key;
                 if(class_exists($class)){
-                    $this->dbs[$db] = new $class(
+                    $this->dbs[$id] = new $class(
                         $this,
-                        $db 
+                        $id 
                     );
                 } else {
                     trigger_error($class .' not exists.');
                     return false;
                 }
             } else {
-                $this->dbs[$db] = new BaseSsdb(
+                $this->dbs[$id] = new BaseSsdb(
                     $this,
-                    $db
+                    $id
                 );
             }
         }
-        return $this->dbs[$db];
+        return $this->dbs[$id];
     }
 }

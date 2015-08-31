@@ -3,14 +3,19 @@ namespace PMVC\PlugIn\ssdb;
 
 class BaseSsdb implements \ArrayAccess
 {
-
-    protected $groupDb;
+    /**
+     * Group ID
+     */
+    protected $groupId;
+    /**
+     * SSDB instance
+     */
     public $db;
 
-    public function __construct($db, $groupDb=null)
+    public function __construct($ssdb, $groupId=null)
     {
-        $this->db = $db;
-        $this->groupDb = $groupDb;
+        $this->db = $ssdb;
+        $this->groupId = $groupId;
     }
 
     /**
@@ -22,10 +27,10 @@ class BaseSsdb implements \ArrayAccess
      */
     public function offsetExists($k)
     {
-        if (empty($this->groupDb)) {
+        if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hexists($this->groupDb, $k);
+        return $this->db->hexists($this->groupId, $k);
     }
 
     /**
@@ -38,15 +43,15 @@ class BaseSsdb implements \ArrayAccess
     public function &offsetGet($k=null)
     {
         $arr = false;
-        if (empty($this->groupDb)) {
+        if (empty($this->groupId)) {
             return $arr;
         }
         if (is_null($k)) {
-	    $arr = $this->db->hgetall($this->groupDb);
+	    $arr = $this->db->hgetall($this->groupId);
         } elseif (is_array($k)) { 
-            $arr = $this->db->multi_hget($this->groupDb, $k);
+            $arr = $this->db->multi_hget($this->groupId, $k);
         } else {
-            $arr = $this->db->hget($this->groupDb, $k);
+            $arr = $this->db->hget($this->groupId, $k);
         }
         return $arr;
     }
@@ -61,10 +66,10 @@ class BaseSsdb implements \ArrayAccess
      */
     public function offsetSet($k, $v=null)
     {
-        if (empty($this->groupDb)) {
+        if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hset($this->groupDb,$k,$v);
+        return $this->db->hset($this->groupId,$k,$v);
     }
 
     /**
@@ -76,9 +81,9 @@ class BaseSsdb implements \ArrayAccess
      */
     public function offsetUnset($k=null)
     {
-        if (empty($this->groupDb)) {
+        if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hdel($this->groupDb, $k);
+        return $this->db->hdel($this->groupId, $k);
     }
 }

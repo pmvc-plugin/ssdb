@@ -47,7 +47,7 @@ class image extends BaseSsdb
      */
     public function offsetUnset($k=null)
     {
-        if (false===strpos($k,$this->groupDb)) {
+        if (false===strpos($k,$this->groupId)) {
             return false;
         }
         return $this->db->del($k);
