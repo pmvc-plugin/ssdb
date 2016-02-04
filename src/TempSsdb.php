@@ -1,7 +1,7 @@
 <?php
 namespace PMVC\PlugIn\ssdb;
 
-class session extends BaseSsdb
+class TempSsdb extends BaseSsdb
 {
      public $cache = 86400;
 
