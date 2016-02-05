@@ -23,7 +23,6 @@ class ssdb extends \PMVC\PlugIn
                 \PMVC\d($e->getMessage());
             }
         }
-        $this->aliasForce = true;
         $this->setDefaultAlias($this['ssdb']);
     }
 
