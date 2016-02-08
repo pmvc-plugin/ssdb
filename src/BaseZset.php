@@ -1,34 +1,8 @@
 <?php
 namespace PMVC\PlugIn\ssdb;
 
-class BaseSsdb implements \ArrayAccess
+class BaseZset extends BaseSsdb
 {
-    /**
-     * Group ID
-     */
-    protected $groupId;
-    /**
-     * SSDB instance
-     */
-    public $db;
-
-    /**
-     * Construct
-     */
-    public function __construct($ssdb, $groupId=null)
-    {
-        $this->db = $ssdb;
-        $this->groupId = $groupId;
-    }
-
-    /**
-     * Really name in database table name
-     */
-     public function getTable()
-     {
-        return $this->groupId;
-     }
-
     /**
      * ContainsKey
      *
@@ -41,7 +15,7 @@ class BaseSsdb implements \ArrayAccess
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hexists($this->groupId, $k);
+        return $this->db->zexists($this->groupId, $k);
     }
 
     /**
@@ -53,16 +27,16 @@ class BaseSsdb implements \ArrayAccess
      */
     public function &offsetGet($k=null)
     {
-        $arr = false;
+        $arr = null;
         if (empty($this->groupId)) {
             return $arr;
         }
         if (is_null($k)) {
-	    $arr = $this->db->hgetall($this->groupId);
+	    //$arr = $this->db->hgetall($this->groupId);
         } elseif (is_array($k)) { 
-            $arr = $this->db->multi_hget($this->groupId, $k);
+            $arr = $this->db->multi_zget($this->groupId, $k);
         } else {
-            $arr = $this->db->hget($this->groupId, $k);
+            $arr = $this->db->zget($this->groupId, $k);
         }
         return $arr;
     }
@@ -80,7 +54,7 @@ class BaseSsdb implements \ArrayAccess
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hset($this->groupId,$k,$v);
+        return $this->db->zset($this->groupId,$k,$v);
     }
 
     /**
@@ -95,6 +69,6 @@ class BaseSsdb implements \ArrayAccess
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->hdel($this->groupId, $k);
+        return $this->db->zdel($this->groupId, $k);
     }
 }
