@@ -86,4 +86,12 @@ class BaseSsdb implements \ArrayAccess
         }
         return $this->db->hdel($this->groupId, $k);
     }
+
+    /**
+     * Really name in database table name
+     */
+     public function getTable()
+     {
+        return $this->groupId;
+     }
 }
