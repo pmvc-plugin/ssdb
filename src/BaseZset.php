@@ -32,7 +32,7 @@ class BaseZset extends BaseSsdb
             return $arr;
         }
         if (is_null($k)) {
-	    //$arr = $this->db->hgetall($this->groupId);
+	    $arr = $this->db->zscan($this->groupId, '', '', '', 99999);
         } elseif (is_array($k)) { 
             $arr = $this->db->multi_zget($this->groupId, $k);
         } else {
