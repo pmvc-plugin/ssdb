@@ -4,7 +4,7 @@
 [![License](https://poser.pugx.org/pmvc-plugin/ssdb/license)](https://packagist.org/packages/pmvc-plugin/ssdb)
 [![Total Downloads](https://poser.pugx.org/pmvc-plugin/ssdb/downloads)](https://packagist.org/packages/pmvc-plugin/ssdb) 
 
-PMVC ssdb Plugin 
+PMVC SSDB Plugin 
 ===============
    * ssdb https://github.com/ssdb/phpssdb
 
