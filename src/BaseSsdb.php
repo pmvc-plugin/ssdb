@@ -22,6 +22,21 @@ class BaseSsdb implements \ArrayAccess
     }
 
     /**
+     * Super Call
+     */
+     public function __call($method, $args)
+     {
+         $func = array($this->db,$method);
+         if (is_callable($func)) {
+            array_unshift($args, $this->groupId);
+            return call_user_func_array(
+                $func,
+                $args
+            );
+         }
+     }
+
+    /**
      * Really name in database table name
      */
      public function getTable()
