@@ -95,6 +95,13 @@ class BaseSsdb implements \ArrayAccess
         if (empty($this->groupId)) {
             return;
         }
+        if (is_object($v) || is_array($v)) {
+            return !trigger_error(
+                'SSDB only support string: '.
+                    var_export($v,true),
+                E_USER_WARNING
+            );
+        }
         return $this->db->hset($this->groupId,$k,$v);
     }
 

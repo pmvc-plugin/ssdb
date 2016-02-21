@@ -13,8 +13,8 @@ PMVC SSDB Plugin
    * mkdir test_folder
    * curl -sS https://getcomposer.org/installer | php
 
-### 2. Install Use composer.json or use command-line directly
-#### 2.1 Install Use composer.json
+### 2. Install by composer.json or use command-line directly
+#### 2.1 Install SSDB by adding a dependency to pmvc-plugin/ssdb to the require section of your project's composer.json configuration file. 
    * vim composer.json
 ```
 {
