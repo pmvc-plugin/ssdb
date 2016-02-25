@@ -8,7 +8,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 
 class ssdb extends \PMVC\PlugIn
 {
-    private $dbs;
+    use \IdOfThings\GetDb;
     public function init()
     {
         if (empty($this['ssdb'])) {
@@ -25,35 +25,6 @@ class ssdb extends \PMVC\PlugIn
             }
         }
         $this->setDefaultAlias($this['ssdb']);
-    }
-
-    /**
-     * @param int    $id  group guid
-     * @param string $key group key
-     */
-    public function getDb($id,$key=null)
-    {
-        if(empty($this->dbs[$id])){
-            $path = __DIR__.'/src/dbs/'.$key.'.php';
-            if (\PMVC\realpath($path)) {
-                \PMVC\l($path);
-                $class = __NAMESPACE__.'\\'.$key;
-                if(class_exists($class)){
-                    $this->dbs[$id] = new $class(
-                        $this['this'],
-                        $id 
-                    );
-                } else {
-                    trigger_error($class .' not exists.');
-                    return false;
-                }
-            } else {
-                $this->dbs[$id] = new BaseSsdb(
-                    $this['this'],
-                    $id
-                );
-            }
-        }
-        return $this->dbs[$id];
+        $this['baseDb'] = __NAMESPACE__.'\BaseSsdb';
     }
 }
