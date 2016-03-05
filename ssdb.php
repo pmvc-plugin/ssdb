@@ -13,9 +13,13 @@ class ssdb extends \PMVC\PlugIn
     {
         if (empty($this['ssdb'])) {
             $get = \PMVC\plug('get');
+            $host = $get->get('SSDB_HOST');
+            if (empty($host)) {
+                return;
+            }
             try {
                 $ssdb = new \SimpleSSDB (
-                    $get->get('SSDB_HOST'),
+                    $host,
                     $get->get('SSDB_PORT')
                 );
                 $this['ssdb']=$ssdb;
