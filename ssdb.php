@@ -6,9 +6,8 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/src/BaseZset.php');
 \PMVC\l(__DIR__.'/src/TempSsdb.php');
 
-class ssdb extends \PMVC\PlugIn
+class ssdb extends \IdOfThings\GetDb
 {
-    use \IdOfThings\GetDb;
     public function init()
     {
         if (empty($this['ssdb'])) {
@@ -29,6 +28,15 @@ class ssdb extends \PMVC\PlugIn
             }
         }
         $this->setDefaultAlias($this['ssdb']);
-        $this['baseDb'] = __NAMESPACE__.'\BaseSsdb';
+    }
+
+    public function getBaseDb()
+    {
+        return __NAMESPACE__.'\BaseSsdb';
+    }
+
+    public function getNameSpace()
+    {
+        return __NAMESPACE__;
     }
 }
