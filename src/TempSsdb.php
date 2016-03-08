@@ -30,10 +30,11 @@ class TempSsdb extends BaseSsdb
      *
      * @return mixed 
      */
-    public function offsetGet($k=null)
+    public function &offsetGet($k=null)
     {
         $theKey = $this->initKey($k);
-        return $this->db->get($theKey); 
+        $result = $this->db->get($theKey);
+        return $result;
     }
 
     /**
