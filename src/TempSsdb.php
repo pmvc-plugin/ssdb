@@ -5,9 +5,20 @@ class TempSsdb extends BaseSsdb
 {
      public $cache = 86400;
 
+    /**
+     * For composite key
+     */
      public function initKey($k)
      {
         return $this->groupId.'_'.$k;
+     }
+
+     /**
+      * Set Cache
+      */
+     public function setCache($i)
+     {
+        $this->cache = $i;
      }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 PMVC\Load::plug();
-PMVC\setPlugInFolder('../');
+PMVC\setPlugInFolders(['../']);
 class SsdbTest extends PHPUnit_Framework_TestCase
 {
     function testPlugin()
