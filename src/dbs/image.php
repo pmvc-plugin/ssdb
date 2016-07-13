@@ -1,8 +1,9 @@
 <?php
 namespace PMVC\PlugIn\ssdb\dbs;
-use PMVC\PlugIn\ssdb\TempSsdb;
 
-class image extends TempSsdb
+use PMVC\PlugIn\ssdb\BaseTempSsdb;
+
+class image extends BaseTempSsdb
 {
      public function initKey($k)
      {
