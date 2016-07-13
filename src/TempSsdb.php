@@ -21,6 +21,15 @@ class TempSsdb extends BaseSsdb
         $this->cache = $i;
      }
 
+     /**
+      * TTL
+      */
+      public function ttl($k)
+      {
+          $theKey = $this->initKey($k);
+          return $this->db->ttl($theKey);
+      }
+
     /**
      * ContainsKey
      *
