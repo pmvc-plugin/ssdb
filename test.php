@@ -17,6 +17,7 @@ class SsdbTest extends PHPUnit_Framework_TestCase
     {
         $plug = 'ssdb';
         $oPlug = PMVC\plug($plug,array('ssdb'=>new stdClass()));
+        $oPlug->setConnected(true);
         $db = $oPlug->getDb('xxx');
         $this->assertContains('xxx',print_r($db,true));
         $this->assertTrue(is_a($db,'\PMVC\PlugIn\ssdb\BaseSsdb'));

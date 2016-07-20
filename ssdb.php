@@ -22,12 +22,13 @@ class ssdb extends \IdOfThings\GetDb
                     $get->get('SSDB_PORT')
                 );
                 $this['ssdb']=$ssdb;
+                $this->setDefaultAlias($this['ssdb']);
+                $this->setConnected(true);
             } catch (Exception $e) {
                 \PMVC\log($e->getMessage());
                 \PMVC\d($e->getMessage());
             }
         }
-        $this->setDefaultAlias($this['ssdb']);
     }
 
     public function getBaseDb()
