@@ -7,9 +7,10 @@
 PMVC SSDB Plugin 
 ===============
    * ssdb
-      * https://github.com/ideawu/ssdb/tree/master/api/php
-   * ssdb php api doc
+      * https://github.com/ideawu/ssdb
+   * ssdb php api doc
       * http://ssdb.io/docs/zh_cn/php/
+      * https://github.com/ideawu/ssdb/tree/master/api/php
 
 ## Install with Composer
 ### 1. Download composer
