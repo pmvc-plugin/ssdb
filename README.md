@@ -6,7 +6,8 @@
 
 PMVC SSDB Plugin 
 ===============
-   * ssdb https://github.com/ssdb/phpssdb
+   * ssdb
+      * https://github.com/ideawu/ssdb/tree/master/api/php
    * ssdb php api doc
       * http://ssdb.io/docs/zh_cn/php/
 
