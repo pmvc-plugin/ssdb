@@ -73,7 +73,21 @@ class BaseSsdb implements \ArrayAccess
             return $arr;
         }
         if (is_null($k)) {
-	    $arr = $this->db->hgetall($this->groupId);
+            // hgetall sometimes will make ssdb crash
+            $max = $this->db['getAllMax'];
+            $size = $this->hsize();
+            if ($max >= $size) {
+                $arr = $this->hgetall();
+            } else {
+                trigger_error(
+                    'The db size: ['.
+                    $size.
+                    '] already over protected size ['.
+                    $max.
+                    ']. can\'t run getall automatically.'
+                );
+            }
+            return $arr;
         } elseif (is_array($k)) { 
             $arr = $this->db->multi_hget($this->groupId, $k);
         } else {

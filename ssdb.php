@@ -1,5 +1,9 @@
 <?php
+
 namespace PMVC\PlugIn\ssdb;
+
+use SimpleSSDB;
+
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/lib/SSDB.php');
 \PMVC\l(__DIR__.'/src/BaseSsdb.php');
@@ -11,23 +15,32 @@ class ssdb extends \IdOfThings\GetDb
     public function init()
     {
         if (empty($this['ssdb'])) {
-            $get = \PMVC\plug('get');
+            $this->initSSDB();
+        }
+        if (!isset($this['getAllMax'])) {
+            $this['getAllMax'] = 5000;
+        }
+    }
+
+    public function initSSDB($host=null)
+    {
+        $get = \PMVC\plug('get');
+        if (empty($host)) {
             $host = $get->get('SSDB_HOST');
-            if (empty($host)) {
-                return;
-            }
-            try {
-                $ssdb = new \SimpleSSDB (
-                    $host,
-                    $get->get('SSDB_PORT')
-                );
-                $this['ssdb']=$ssdb;
-                $this->setDefaultAlias($this['ssdb']);
-                $this->setConnected(true);
-            } catch (Exception $e) {
-                \PMVC\log($e->getMessage());
-                \PMVC\d($e->getMessage());
-            }
+        }
+        if (empty($host)) {
+            return;
+        }
+        try {
+            $ssdb = new SimpleSSDB (
+                $host,
+                $get->get('SSDB_PORT')
+            );
+            $this->setDefaultAlias($ssdb);
+            $this->setConnected(true);
+            $this['ssdb']=$ssdb;
+        } catch (Exception $e) {
+            trigger_error($e->getMessage());
         }
     }
 
