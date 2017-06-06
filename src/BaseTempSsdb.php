@@ -23,6 +23,7 @@ class BaseTempSsdb extends BaseSsdb
 
      /**
       * TTL
+      * Get expire sec by key.
       */
       public function ttl($k)
       {
