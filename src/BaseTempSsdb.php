@@ -32,6 +32,16 @@ class BaseTempSsdb extends BaseSsdb
           return reset($ssdb);
       }
 
+      /**
+       * Set expire
+       */
+      public function setExpire($k, $sec)
+      {
+          $theKey = $this->initKey($k);
+          $result = $this->db->expire($theKey, $sec);
+          return $result;
+      }
+
     /**
      * ContainsKey
      *
