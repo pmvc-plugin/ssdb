@@ -3,7 +3,7 @@ namespace PMVC\PlugIn\ssdb;
 
 class BaseTempSsdb extends BaseSsdb
 {
-     public $cache = 86400;
+     private $_cache = 86400;
 
     /**
      * For composite key
@@ -18,7 +18,7 @@ class BaseTempSsdb extends BaseSsdb
       */
      public function setCache($i)
      {
-        $this->cache = $i;
+        $this->_cache = $i;
      }
 
      /**
@@ -73,7 +73,7 @@ class BaseTempSsdb extends BaseSsdb
         $this->db->setx(
            $theKey,
            $v,
-           $this->cache
+           $this->_cache
         );
     }
 
