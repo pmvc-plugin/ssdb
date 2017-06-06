@@ -28,7 +28,8 @@ class BaseTempSsdb extends BaseSsdb
       public function ttl($k)
       {
           $theKey = $this->initKey($k);
-          return $this->db->ttl($theKey);
+          $ssdb = $this->db->ttl($theKey);
+          return reset($ssdb);
       }
 
     /**
