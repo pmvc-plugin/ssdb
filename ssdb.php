@@ -24,9 +24,8 @@ class ssdb extends \IdOfThings\GetDb
 
     public function initSSDB($host=null)
     {
-        $get = \PMVC\plug('get');
         if (empty($host)) {
-            $host = $get->get('SSDB_HOST');
+            $host = $this['host'];
         }
         if (empty($host)) {
             return;
@@ -34,7 +33,7 @@ class ssdb extends \IdOfThings\GetDb
         try {
             $ssdb = new SimpleSSDB (
                 $host,
-                $get->get('SSDB_PORT')
+                $this['port']
             );
             $this->setDefaultAlias($ssdb);
             $this->setConnected(true);
