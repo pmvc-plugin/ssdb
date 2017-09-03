@@ -3,6 +3,7 @@
 namespace PMVC\PlugIn\ssdb;
 
 use SimpleSSDB;
+use IdOfThings\GetDb;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/lib/SSDB.php');
@@ -10,7 +11,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/src/BaseZset.php');
 \PMVC\l(__DIR__.'/src/BaseTempSsdb.php');
 
-class ssdb extends \IdOfThings\GetDb
+class ssdb extends GetDb
 {
     public function init()
     {
@@ -22,19 +23,16 @@ class ssdb extends \IdOfThings\GetDb
         }
     }
 
-    public function initSSDB($host=null)
+    public function initSSDB($readHost=null, $writeHost=null)
     {
-        if (empty($host)) {
-            $host = $this['host'];
+        if (empty($readHost)) {
+            $readHost = $this['readHost'];
         }
-        if (empty($host)) {
-            return;
+        if (empty($writeHost)) {
+            $writeHost = $this['writeHost'];
         }
         try {
-            $ssdb = new SimpleSSDB (
-                $host,
-                $this['port']
-            );
+            $ssdb = $this->read_write($readHost, $writeHost); 
             $this->setDefaultAlias($ssdb);
             $this->setConnected(true);
             $this['ssdb']=$ssdb;

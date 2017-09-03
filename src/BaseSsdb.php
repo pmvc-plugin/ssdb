@@ -1,7 +1,10 @@
 <?php
+
 namespace PMVC\PlugIn\ssdb;
 
-class BaseSsdb implements \ArrayAccess
+use ArrayAccess;
+
+class BaseSsdb implements ArrayAccess
 {
     /**
      * Group ID

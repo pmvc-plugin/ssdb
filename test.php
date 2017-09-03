@@ -6,8 +6,7 @@ use PHPUnit_Framework_TestCase;
 
 \PMVC\Load::plug();
 \PMVC\addPlugInFolders(['../']);
-
-\PMVC\initPlugIn(['ssdb'=>null]);
+\PMVC\initPlugIn(['ssdb'=>null], true);
 
 class SsdbTest extends PHPUnit_Framework_TestCase
 {
@@ -17,6 +16,7 @@ class SsdbTest extends PHPUnit_Framework_TestCase
 
     function setup()
     {
+        \PMVC\unplug($this->_plug);
         $this->_instance = \PMVC\plug(
             $this->_plug,
             [
