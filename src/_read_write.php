@@ -2,6 +2,8 @@
 
 namespace PMVC\PlugIn\ssdb;
 
+use SimpleSSDB;
+
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ReadWriteAdapter';
 
 class ReadWriteAdapter
@@ -60,6 +62,7 @@ class ReadWriteAdapter
             $this->_write = $this->_init_ssdb($write);
             $this->_same = false;
         }
+        return $this;
     }
 
     private function _init_ssdb($host)

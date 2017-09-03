@@ -2,7 +2,6 @@
 
 namespace PMVC\PlugIn\ssdb;
 
-use SimpleSSDB;
 use IdOfThings\GetDb;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
