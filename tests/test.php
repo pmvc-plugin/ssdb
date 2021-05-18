@@ -2,27 +2,22 @@
 
 namespace PMVC\PlugIn\ssdb;
 
-use PHPUnit_Framework_TestCase;
+use PMVC\TestCase;
 
-\PMVC\Load::plug();
-\PMVC\addPlugInFolders(['../']);
-\PMVC\initPlugIn(['ssdb'=>null], true);
+\PMVC\initPlugIn(['ssdb' => null], true);
 
-class SsdbTest extends PHPUnit_Framework_TestCase
+class SsdbTest extends TestCase
 {
     private $_plug = 'ssdb';
 
     private $_instance;
 
-    function setup()
+    function pmvc_setup()
     {
         \PMVC\unplug($this->_plug);
-        $this->_instance = \PMVC\plug(
-            $this->_plug,
-            [
-                'ssdb'=>new \stdClass()
-            ]
-        );
+        $this->_instance = \PMVC\plug($this->_plug, [
+            'ssdb' => new \stdClass(),
+        ]);
     }
 
     function testPlugin()
@@ -31,7 +26,7 @@ class SsdbTest extends PHPUnit_Framework_TestCase
         print_r($this->_instance);
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains($this->_plug,$output);
+        $this->haveString($this->_plug, $output);
     }
 
     function testGetDb()
@@ -39,25 +34,24 @@ class SsdbTest extends PHPUnit_Framework_TestCase
         $oPlug = $this->_instance;
         $oPlug->setConnected(true);
         $db = $oPlug->getDb('xxx');
-        $this->assertContains('xxx',print_r($db,true));
-        $this->assertTrue(is_a($db,'\PMVC\PlugIn\ssdb\BaseSsdb'));
+        $this->haveString('xxx', print_r($db, true));
+        $this->assertTrue(is_a($db, '\PMVC\PlugIn\ssdb\BaseSsdb'));
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException Exception
      */
     function testGetAll()
     {
         $fakeId = '999999';
-        $fakeDb = new fakeSSDB(
-            $this->_instance,
-            $fakeId
-        );
+        $fakeDb = new fakeSSDB($this->_instance, $fakeId);
         $fakeDb->size = 5000;
         $all = \PMVC\get($fakeDb);
         $this->assertTrue($fakeDb->getAll);
         $fakeDb->size = 5001;
-        $all = \PMVC\get($fakeDb);
+        $this->willThrow(function () use($all, $fakeDb){
+            $all = \PMVC\get($fakeDb);
+        });
     }
 }
 
