@@ -72,7 +72,7 @@ class ReadWriteAdapter
         try {
             $ssdb = new SimpleSSDB (
                 $host[0],
-                $host[1] 
+                \PMVC\get($host, 1, 8888)
             );
         } catch (Exception $e) {
             trigger_error($e->getMessage());
