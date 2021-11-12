@@ -15,7 +15,7 @@ class BaseZset extends BaseSsdb
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->zexists($this->groupId, $k);
+        return $this->engine->zexists($this->groupId, $k);
     }
 
     /**
@@ -32,11 +32,11 @@ class BaseZset extends BaseSsdb
             return $arr;
         }
         if (is_null($k)) {
-	    $arr = $this->db->zscan($this->groupId, '', '', '', 99999);
+	    $arr = $this->engine->zscan($this->groupId, '', '', '', 99999);
         } elseif (is_array($k)) { 
-            $arr = $this->db->multi_zget($this->groupId, $k);
+            $arr = $this->engine->multi_zget($this->groupId, $k);
         } else {
-            $arr = $this->db->zget($this->groupId, $k);
+            $arr = $this->engine->zget($this->groupId, $k);
         }
         return $arr;
     }
@@ -54,7 +54,7 @@ class BaseZset extends BaseSsdb
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->zset($this->groupId,$k,$v);
+        return $this->engine->zset($this->groupId,$k,$v);
     }
 
     /**
@@ -69,6 +69,6 @@ class BaseZset extends BaseSsdb
         if (empty($this->groupId)) {
             return;
         }
-        return $this->db->zdel($this->groupId, $k);
+        return $this->engine->zdel($this->groupId, $k);
     }
 }

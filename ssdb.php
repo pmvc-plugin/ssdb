@@ -2,7 +2,7 @@
 
 namespace PMVC\PlugIn\ssdb;
 
-use IdOfThings\GetDb;
+use IdOfThings\GetModel;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/lib/SSDB.php');
@@ -10,7 +10,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ssdb';
 \PMVC\l(__DIR__.'/src/BaseZset.php');
 \PMVC\l(__DIR__.'/src/BaseTempSsdb.php');
 
-class ssdb extends GetDb
+class ssdb extends GetModel
 {
     public function init()
     {
@@ -40,7 +40,7 @@ class ssdb extends GetDb
         }
     }
 
-    public function getBaseDb()
+    public function getBaseModel()
     {
         return __NAMESPACE__.'\BaseSsdb';
     }

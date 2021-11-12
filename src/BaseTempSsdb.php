@@ -3,7 +3,7 @@ namespace PMVC\PlugIn\ssdb;
 
 class BaseTempSsdb extends BaseSsdb
 {
-     private $_cache = 86400;
+     private $_ttl = 86400;
 
     /**
      * For composite key
@@ -16,9 +16,9 @@ class BaseTempSsdb extends BaseSsdb
      /**
       * Set Cache
       */
-     public function setCache($i)
+     public function setTTL($i)
      {
-        $this->_cache = $i;
+        $this->_ttl = $i;
      }
 
      /**
@@ -28,7 +28,7 @@ class BaseTempSsdb extends BaseSsdb
       public function ttl($k)
       {
           $theKey = $this->initKey($k);
-          $ssdb = $this->db->ttl($theKey);
+          $ssdb = $this->engine->ttl($theKey);
           return reset($ssdb);
       }
 
@@ -38,7 +38,7 @@ class BaseTempSsdb extends BaseSsdb
       public function setExpire($k, $sec)
       {
           $theKey = $this->initKey($k);
-          $result = $this->db->expire($theKey, $sec);
+          $result = $this->engine->expire($theKey, $sec);
           return $result;
       }
 
@@ -52,7 +52,7 @@ class BaseTempSsdb extends BaseSsdb
     public function offsetExists($k)
     {
         $theKey = $this->initKey($k);
-        return $this->db->exists($theKey);
+        return $this->engine->exists($theKey);
     }
 
     /**
@@ -65,7 +65,7 @@ class BaseTempSsdb extends BaseSsdb
     public function &offsetGet($k=null)
     {
         $theKey = $this->initKey($k);
-        $result = $this->db->get($theKey);
+        $result = $this->engine->get($theKey);
         return $result;
     }
 
@@ -80,10 +80,10 @@ class BaseTempSsdb extends BaseSsdb
     public function offsetSet($k, $v=null)
     {
         $theKey = $this->initKey($k);
-        $this->db->setx(
+        $this->engine->setx(
            $theKey,
            $v,
-           $this->_cache
+           $this->_ttl
         );
     }
 
@@ -97,6 +97,6 @@ class BaseTempSsdb extends BaseSsdb
     public function offsetUnset($k=null)
     {
         $theKey = $this->initKey($k);
-        return $this->db->del($theKey);
+        return $this->engine->del($theKey);
     }
 }

@@ -33,7 +33,7 @@ class SsdbTest extends TestCase
     {
         $oPlug = $this->_instance;
         $oPlug->setConnected(true);
-        $db = $oPlug->getDb('xxx');
+        $db = $oPlug->getModel('xxx');
         $this->haveString('xxx', print_r($db, true));
         $this->assertTrue(is_a($db, '\PMVC\PlugIn\ssdb\BaseSsdb'));
     }

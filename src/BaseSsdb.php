@@ -9,57 +9,54 @@ class BaseSsdb implements ArrayAccess
     /**
      * Group ID
      */
-    protected $groupId;
+    protected $modelId;
     /**
      * SSDB instance
      */
-    public $db;
+    public $engine;
 
     /**
      * Construct
      */
-    public function __construct($ssdb, $groupId=null)
+    public function __construct($ssdb, $modelId = null)
     {
-        $this->db = $ssdb;
-        $this->groupId = $groupId;
+        $this->engine = $ssdb;
+        $this->modelId = $modelId;
     }
 
     /**
      * Super Call
      */
-     public function __call($method, $args)
-     {
-         $func = array($this->db,$method);
-         if (is_callable($func)) {
-            array_unshift($args, $this->groupId);
-            return call_user_func_array(
-                $func,
-                $args
-            );
-         }
-     }
+    public function __call($method, $args)
+    {
+        $func = [$this->engine, $method];
+        if (is_callable($func)) {
+            array_unshift($args, $this->modelId);
+            return call_user_func_array($func, $args);
+        }
+    }
 
     /**
      * Really name in database table name
      */
-     public function getTable()
-     {
-        return $this->groupId;
-     }
+    public function getTable()
+    {
+        return $this->modelId;
+    }
 
     /**
      * ContainsKey
      *
-     * @param string $k key 
+     * @param string $k key
      *
      * @return boolean
      */
     public function offsetExists($k)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
-        return $this->db->hexists($this->groupId, $k);
+        return $this->engine->hexists($this->modelId, $k);
     }
 
     /**
@@ -67,59 +64,58 @@ class BaseSsdb implements ArrayAccess
      *
      * @param mixed $k key
      *
-     * @return mixed 
+     * @return mixed
      */
-    public function &offsetGet($k=null)
+    public function &offsetGet($k = null)
     {
         $arr = false;
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return $arr;
         }
         if (is_null($k)) {
             // hgetall sometimes will make ssdb crash
-            $max = $this->db['getAllMax'];
+            $max = $this->engine['getAllMax'];
             $size = $this->hsize();
             if ($max >= $size) {
                 $arr = $this->hgetall();
             } else {
                 trigger_error(
-                    'The db size: ['.
-                    $size.
-                    '] already over protected size ['.
-                    $max.
-                    ']. can\'t run getall automatically.'
+                    'The db size: [' .
+                        $size .
+                        '] already over protected size [' .
+                        $max .
+                        ']. can\'t run getall automatically.'
                 );
             }
             return $arr;
-        } elseif (is_array($k)) { 
-            $arr = $this->db->multi_hget($this->groupId, $k);
+        } elseif (is_array($k)) {
+            $arr = $this->engine->multi_hget($this->modelId, $k);
         } else {
-            $arr = $this->db->hget($this->groupId, $k);
+            $arr = $this->engine->hget($this->modelId, $k);
         }
         return $arr;
     }
 
     /**
-     * Set 
+     * Set
      *
      * @param mixed $k key
-     * @param mixed $v value 
+     * @param mixed $v value
      *
-     * @return bool 
+     * @return bool
      */
-    public function offsetSet($k, $v=null)
+    public function offsetSet($k, $v = null)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
         if (is_object($v) || is_array($v)) {
             return !trigger_error(
-                'SSDB only support string: '.
-                    var_export($v,true),
+                'SSDB only support string: ' . var_export($v, true),
                 E_USER_WARNING
             );
         }
-        return $this->db->hset($this->groupId,$k,$v);
+        return $this->engine->hset($this->modelId, $k, $v);
     }
 
     /**
@@ -127,13 +123,13 @@ class BaseSsdb implements ArrayAccess
      *
      * @param mixed $k key
      *
-     * @return bool 
+     * @return bool
      */
-    public function offsetUnset($k=null)
+    public function offsetUnset($k = null)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
-        return $this->db->hdel($this->groupId, $k);
+        return $this->engine->hdel($this->modelId, $k);
     }
 }
