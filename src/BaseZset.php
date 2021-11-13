@@ -6,16 +6,16 @@ class BaseZset extends BaseSsdb
     /**
      * ContainsKey
      *
-     * @param string $k key 
+     * @param string $k key
      *
      * @return boolean
      */
     public function offsetExists($k)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
-        return $this->engine->zexists($this->groupId, $k);
+        return $this->engine->zexists($this->modelId, $k);
     }
 
     /**
@@ -23,38 +23,38 @@ class BaseZset extends BaseSsdb
      *
      * @param mixed $k key
      *
-     * @return mixed 
+     * @return mixed
      */
-    public function &offsetGet($k=null)
+    public function &offsetGet($k = null)
     {
         $arr = null;
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return $arr;
         }
         if (is_null($k)) {
-	    $arr = $this->engine->zscan($this->groupId, '', '', '', 99999);
-        } elseif (is_array($k)) { 
-            $arr = $this->engine->multi_zget($this->groupId, $k);
+            $arr = $this->engine->zscan($this->modelId, '', '', '', 99999);
+        } elseif (is_array($k)) {
+            $arr = $this->engine->multi_zget($this->modelId, $k);
         } else {
-            $arr = $this->engine->zget($this->groupId, $k);
+            $arr = $this->engine->zget($this->modelId, $k);
         }
         return $arr;
     }
 
     /**
-     * Set 
+     * Set
      *
      * @param mixed $k key
-     * @param mixed $v value 
+     * @param mixed $v value
      *
-     * @return bool 
+     * @return bool
      */
-    public function offsetSet($k, $v=null)
+    public function offsetSet($k, $v = null)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
-        return $this->engine->zset($this->groupId,$k,$v);
+        return $this->engine->zset($this->modelId, $k, $v);
     }
 
     /**
@@ -62,13 +62,13 @@ class BaseZset extends BaseSsdb
      *
      * @param mixed $k key
      *
-     * @return bool 
+     * @return bool
      */
-    public function offsetUnset($k=null)
+    public function offsetUnset($k = null)
     {
-        if (empty($this->groupId)) {
+        if (empty($this->modelId)) {
             return;
         }
-        return $this->engine->zdel($this->groupId, $k);
+        return $this->engine->zdel($this->modelId, $k);
     }
 }

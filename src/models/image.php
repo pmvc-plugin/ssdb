@@ -7,7 +7,7 @@ class image extends BaseTempSsdb
 {
      public function initKey($k)
      {
-        if (false===strpos($k,$this->groupId)) {
+        if (false===strpos($k,$this->modelId)) {
             return false;
         }
         return $k;

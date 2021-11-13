@@ -10,7 +10,7 @@ class BaseTempSsdb extends BaseSsdb
      */
      public function initKey($k)
      {
-        return $this->groupId.'_'.$k;
+        return $this->modelId.'_'.$k;
      }
 
      /**

@@ -7,7 +7,7 @@ use ArrayAccess;
 class BaseSsdb implements ArrayAccess
 {
     /**
-     * Group ID
+     * Model ID, aka table name.
      */
     protected $modelId;
     /**
