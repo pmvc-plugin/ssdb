@@ -29,7 +29,7 @@ class SsdbTest extends TestCase
         $this->haveString($this->_plug, $output);
     }
 
-    function testGetDb()
+    function testGetModel()
     {
         $oPlug = $this->_instance;
         $oPlug->setConnected(true);
